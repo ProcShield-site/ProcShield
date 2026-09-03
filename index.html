@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROC SHIELD Private Limited — Next-Generation Hardware Security</title>
+<meta name="description" content="PROC SHIELD designs secure hardware: embedded systems, custom SoCs, and IC supply-chain protection for a more private digital world.">
+<style>
+  :root{
+    --bg: #0E1318;
+    --panel: #161D26;
+    --panel-line: #26313d;
+    --ink: #E9E6DD;
+    --ink-dim: #9AA7B2;
+    --gold: #C9A15A;
+    --gold-dim: #8a733f;
+    --signal: #5FB6D9;
+    --radius: 2px;
+    --mono: 'IBM Plex Mono', 'Space Mono', 'Courier New', monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  a{ color: inherit; }
+  img{ max-width: 100%; display:block; }
+
+  :focus-visible{
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- fiducial corner marks (chip alignment marks) ---------- */
+  .die{
+    position: relative;
+    border: 1px solid var(--panel-line);
+    background: var(--panel);
+  }
+  .die::before, .die::after,
+  .die .corner-br, .die .corner-bl{
+    content:"";
+    position:absolute;
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--gold-dim);
+  }
+  .die::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+  .die::after{ top:-1px; right:-1px; border-left:none; border-bottom:none; }
+  .die .corner-bl{ bottom:-1px; left:-1px; border-right:none; border-top:none; }
+  .die .corner-br{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+
+  /* ---------- nav ---------- */
+  header{
+    position: sticky; top:0; z-index: 40;
+    background: rgba(14,19,24,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--panel-line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top: 18px; padding-bottom: 18px;
+  }
+  .logo{
+    font-family: var(--mono);
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    text-decoration:none;
+    color: var(--ink);
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo .mark{
+    width:9px; height:9px;
+    background: var(--gold);
+    box-shadow: 0 0 8px 1px rgba(201,161,90,0.6);
+  }
+  .navlinks{ display:flex; gap: 34px; list-style:none; margin:0; padding:0; }
+  .navlinks a{
+    font-size: 14px;
+    text-decoration:none;
+    color: var(--ink-dim);
+    transition: color .2s ease;
+  }
+  .navlinks a:hover{ color: var(--ink); }
+  .navtoggle{ display:none; background:none; border:1px solid var(--panel-line); color:var(--ink); padding:8px 10px; font-family:var(--mono); }
+
+  @media (max-width: 720px){
+    .navlinks{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0;
+      background: var(--panel);
+      border-bottom:1px solid var(--panel-line);
+      max-height:0; overflow:hidden;
+    }
+    .navlinks.open{ max-height: 260px; }
+    .navlinks li{ border-top:1px solid var(--panel-line); }
+    .navlinks a{ display:block; padding: 16px 32px; }
+    .navtoggle{ display:block; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position: relative;
+    overflow:hidden;
+    padding: 96px 0 120px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items:center;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero{ padding: 64px 0 72px; }
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1.headline{
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(32px, 5vw, 54px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0 0 22px;
+    color: var(--ink);
+  }
+  .hero p.lede{
+    font-size: 17px;
+    color: var(--ink-dim);
+    max-width: 46ch;
+    margin: 0 0 32px;
+  }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family: var(--mono);
+    font-size: 13.5px;
+    padding: 13px 22px;
+    text-decoration:none;
+    display:inline-block;
+    border: 1px solid var(--gold-dim);
+    color: var(--ink);
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .btn.primary{ background: var(--gold); color:#151008; border-color:var(--gold); }
+  .btn.primary:hover{ background:#dcb877; }
+  .btn.ghost:hover{ border-color: var(--ink-dim); }
+
+  /* circuit svg */
+  .circuit-holder{ position:relative; z-index:1; }
+  svg.circuit{ width:100%; height:auto; display:block; }
+  .trace{
+    fill:none;
+    stroke: var(--panel-line);
+    stroke-width:1.4;
+  }
+  .trace.draw{
+    stroke: var(--gold-dim);
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawTrace 2.6s ease-out forwards;
+  }
+  .trace.draw.delay1{ animation-delay: .25s; }
+  .trace.draw.delay2{ animation-delay: .5s; }
+  .trace.draw.delay3{ animation-delay: .75s; }
+  @keyframes drawTrace{ to{ stroke-dashoffset:0; } }
+
+  .pad{ fill: var(--panel-line); }
+  .pad.lit{ fill: var(--gold-dim); }
+
+  .pulse-dot{
+    fill: var(--signal);
+    filter: drop-shadow(0 0 4px var(--signal));
+    offset-rotate: 0deg;
+    animation: none;
+  }
+  @supports (offset-path: path('M0 0')){
+    .pulse-dot{
+      animation: pulseMove 4.5s linear infinite;
+      animation-delay: 2.4s;
+    }
+  }
+  @keyframes pulseMove{
+    0%{ offset-distance: 0%; opacity:0; }
+    5%{ opacity:1; }
+    92%{ opacity:1; }
+    100%{ offset-distance: 100%; opacity:0; }
+  }
+
+  .hero-bg-fade{
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at 70% 20%, rgba(201,161,90,0.08), transparent 60%);
+    z-index:0;
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 88px 0; border-bottom: 1px solid var(--panel-line); }
+  .section-head{ margin-bottom: 48px; max-width: 62ch; }
+  .section-tag{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--gold);
+    margin: 0 0 12px;
+  }
+  h2{
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(24px, 3.2vw, 34px);
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .section-head p{ color: var(--ink-dim); font-size: 16px; max-width: 58ch; }
+
+  /* vision / mission */
+  .vm-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 780px){ .vm-grid{ grid-template-columns: 1fr; } }
+  .vm-card{ padding: 32px; }
+  .vm-card h3{
+    font-family: var(--mono);
+    font-size: 13px;
+    text-transform: none;
+    color: var(--gold);
+    margin: 0 0 16px;
+  }
+  .vm-card p{ color: var(--ink-dim); font-size: 15.5px; margin:0; }
+
+  /* product */
+  .product-grid{
+    display:grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items:center;
+  }
+  @media (max-width: 860px){ .product-grid{ grid-template-columns: 1fr; } }
+  .chip-render{ padding: 40px; display:flex; align-items:center; justify-content:center; }
+  .chip-render svg{ width:100%; max-width:280px; height:auto; }
+  .chip-body{ fill: var(--bg); stroke: var(--gold-dim); stroke-width:1.5; }
+  .chip-pin{ stroke: var(--panel-line); stroke-width:2; }
+  .chip-core{ fill: none; stroke: var(--gold-dim); stroke-width:1; opacity:.7; }
+  .product-copy h3{
+    font-family: var(--mono); font-size: 20px; color: var(--ink); margin:0 0 8px;
+  }
+  .product-copy .kicker{ font-family: var(--mono); font-size:12.5px; color:var(--gold); margin:0 0 10px; }
+  .product-copy p{ color: var(--ink-dim); font-size: 15.5px; }
+  .feature-list{ list-style:none; margin: 22px 0 0; padding:0; display:grid; gap:10px; }
+  .feature-list li{
+    font-size: 14.5px; color: var(--ink);
+    padding-left: 20px; position:relative;
+  }
+  .feature-list li::before{
+    content:""; position:absolute; left:0; top:9px;
+    width:8px; height:1.5px; background: var(--gold-dim);
+  }
+
+  /* services */
+  .svc-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 780px){ .svc-grid{ grid-template-columns: 1fr; } }
+  .svc-card{
+    padding: 28px;
+    transition: transform .25s ease, border-color .25s ease;
+  }
+  .svc-card:hover{ transform: translateY(-4px); border-color: var(--gold-dim); }
+  .svc-num{ font-family: var(--mono); font-size: 12px; color: var(--ink-dim); display:block; margin-bottom:14px; }
+  .svc-card h3{ font-family: var(--mono); font-size: 16px; margin: 0 0 10px; color: var(--ink); font-weight:500; }
+  .svc-card p{ font-size: 14.5px; color: var(--ink-dim); margin:0; }
+
+  /* people */
+  .people-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px){ .people-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px){ .people-grid{ grid-template-columns: 1fr; } }
+  .person{ padding: 26px; text-align:left; }
+  .avatar{
+    width: 52px; height:52px;
+    border: 1px solid var(--gold-dim);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--mono); font-size: 14px; color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .person h3{ font-size: 15.5px; margin: 0 0 4px; }
+  .person .role{ font-family: var(--mono); font-size:12px; color: var(--gold); margin:0 0 12px; }
+  .person p.bio{ font-size: 14px; color: var(--ink-dim); margin:0; }
+
+  /* contact */
+  .contact-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 780px){ .contact-grid{ grid-template-columns: 1fr; } }
+  .contact-info dt{ font-family: var(--mono); font-size:12px; color: var(--gold); margin-top:22px; }
+  .contact-info dt:first-child{ margin-top:0; }
+  .contact-info dd{ margin:6px 0 0; color: var(--ink); font-size: 15px; }
+  form{ display:grid; gap: 16px; }
+  label{ font-family: var(--mono); font-size: 12px; color: var(--ink-dim); display:block; margin-bottom:6px; }
+  input, textarea{
+    width:100%; background: var(--bg); border: 1px solid var(--panel-line);
+    color: var(--ink); padding: 12px 14px; font-family: var(--sans); font-size:14.5px;
+    transition: border-color .2s ease;
+  }
+  input:focus, textarea:focus{ border-color: var(--gold-dim); outline:none; }
+  textarea{ min-height: 120px; resize: vertical; }
+  .form-note{ font-size: 12.5px; color: var(--ink-dim); margin-top: -4px; }
+
+  footer{ padding: 40px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  footer p{ font-size: 13px; color: var(--ink-dim); margin:0; }
+  footer .flogo{ font-family: var(--mono); font-size:13px; color: var(--ink-dim); }
+
+  /* reveal-on-scroll: one subtle utility, used sparingly */
+  .reveal{ opacity:0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo"><span class="mark"></span>PROC&nbsp;SHIELD</a>
+    <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navlinks">MENU</button>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#product">Product</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#people">People</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-bg-fade" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">HARDWARE SECURITY &mdash; FROM SILICON UP</p>
+        <h1 class="headline">Securing the silicon<br>your world runs on.</h1>
+        <p class="lede">PROC SHIELD builds next-generation secure hardware &mdash; from embedded systems to custom System-on-Chips &mdash; protecting data and devices at the level where trust actually starts.</p>
+        <div class="cta-row">
+          <a href="#product" class="btn primary">See our product</a>
+          <a href="#contact" class="btn ghost">Talk to us</a>
+        </div>
+      </div>
+      <div class="circuit-holder" aria-hidden="true">
+        <svg class="circuit" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+          <path id="mainTrace" class="trace draw" d="M20 260 L20 180 L90 180 L90 100 L180 100 L180 40 L340 40"/>
+          <path class="trace draw delay1" d="M20 260 L120 260 L120 220 L220 220 L220 280 L380 280"/>
+          <path class="trace draw delay2" d="M180 100 L180 160 L260 160 L260 220"/>
+          <path class="trace draw delay3" d="M90 180 L60 180 L60 300 L150 300"/>
+          <rect class="pad lit" x="330" y="34" width="12" height="12"/>
+          <rect class="pad" x="14" y="254" width="12" height="12"/>
+          <rect class="pad" x="374" y="274" width="12" height="12"/>
+          <rect class="pad" x="144" y="294" width="12" height="12"/>
+          <rect class="pad lit" x="254" y="214" width="12" height="12"/>
+          <circle class="pulse-dot" r="3.2" style="offset-path: path('M20 260 L20 180 L90 180 L90 100 L180 100 L180 40 L340 40');"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Vision and mission">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-tag">WHY WE EXIST</p>
+        <h2>Vision &amp; mission</h2>
+      </div>
+      <div class="vm-grid">
+        <div class="die vm-card">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <h3>Vision</h3>
+          <p>To lead the next generation of secure hardware &mdash; from embedded systems to custom System-on-Chips and domain-specific architectures &mdash; and to set the industry benchmark for what secure computing should look like in an increasingly connected world.</p>
+        </div>
+        <div class="die vm-card">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <h3>Mission</h3>
+          <p>To protect user privacy as data regulation tightens worldwide, and to defend the IC supply chain from untrusted manufacturing partners through hardware obfuscation &mdash; delivering secure-by-design hardware for general-purpose and specialized computing alike.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="product" aria-label="Product">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-tag">FLAGSHIP PRODUCT</p>
+        <h2>Kavach</h2>
+        <p>Editable placeholder &mdash; replace with your real Kavach product copy. Kavach ("shield") is positioned here as your core hardware-security IP platform.</p>
+      </div>
+      <div class="product-grid">
+        <div class="die chip-render">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <svg viewBox="0 0 200 200">
+            <rect class="chip-body" x="50" y="50" width="100" height="100" rx="2"/>
+            <rect class="chip-core" x="66" y="66" width="68" height="68"/>
+            <g class="chip-pin">
+              <line x1="0" y1="65" x2="50" y2="65"/><line x1="0" y1="85" x2="50" y2="85"/>
+              <line x1="0" y1="105" x2="50" y2="105"/><line x1="0" y1="125" x2="50" y2="125"/>
+              <line x1="150" y1="65" x2="200" y2="65"/><line x1="150" y1="85" x2="200" y2="85"/>
+              <line x1="150" y1="105" x2="200" y2="105"/><line x1="150" y1="125" x2="200" y2="125"/>
+              <line x1="65" y1="0" x2="65" y2="50"/><line x1="85" y1="0" x2="85" y2="50"/>
+              <line x1="105" y1="0" x2="105" y2="50"/><line x1="125" y1="0" x2="125" y2="50"/>
+              <line x1="65" y1="150" x2="65" y2="200"/><line x1="85" y1="150" x2="85" y2="200"/>
+              <line x1="105" y1="150" x2="105" y2="200"/><line x1="125" y1="150" x2="125" y2="200"/>
+            </g>
+          </svg>
+        </div>
+        <div class="product-copy">
+          <p class="kicker">SECURITY IP PLATFORM</p>
+          <h3>Hardware trust, built in at the design stage</h3>
+          <p>Kavach gives chip designers and OEMs a way to harden a device before it ever reaches manufacturing &mdash; not bolted on afterward. [Replace this paragraph with a real description of what Kavach does, who it's for, and what problem it solves.]</p>
+          <ul class="feature-list">
+            <li>Logic obfuscation to protect IP through untrusted foundries</li>
+            <li>On-chip tamper and side-channel detection</li>
+            <li>Configurable for embedded, SoC, and custom silicon</li>
+            <li>Designed to meet emerging data-protection regulation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" aria-label="Services">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-tag">WHAT WE DO</p>
+        <h2>Services</h2>
+        <p>Editable placeholder &mdash; swap in your real service lines and descriptions.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="die svc-card">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <span class="svc-num">01</span>
+          <h3>SoC security architecture</h3>
+          <p>Threat modeling and security architecture for custom System-on-Chip designs, from spec through tape-out.</p>
+        </div>
+        <div class="die svc-card">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <span class="svc-num">02</span>
+          <h3>IC obfuscation &amp; supply-chain protection</h3>
+          <p>Logic-locking and camouflage techniques that protect your IP when chips are assembled by third-party foundries.</p>
+        </div>
+        <div class="die svc-card">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <span class="svc-num">03</span>
+          <h3>Embedded systems hardening</h3>
+          <p>Security review and hardening for embedded platforms, from firmware boundaries to physical attack surfaces.</p>
+        </div>
+        <div class="die svc-card">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <span class="svc-num">04</span>
+          <h3>Security audits &amp; consulting</h3>
+          <p>Independent assessment of existing hardware and embedded products against current attack techniques.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="people" aria-label="People">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-tag">WHO WE ARE</p>
+        <h2>People</h2>
+        <p>Editable placeholder team &mdash; swap in real names, roles, and short bios.</p>
+      </div>
+      <div class="people-grid">
+        <div class="die person">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <div class="avatar">FN</div>
+          <h3>Full Name</h3>
+          <p class="role">Founder &amp; CEO</p>
+          <p class="bio">One or two lines on background and focus area.</p>
+        </div>
+        <div class="die person">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <div class="avatar">FN</div>
+          <h3>Full Name</h3>
+          <p class="role">Co-Founder &amp; CTO</p>
+          <p class="bio">One or two lines on background and focus area.</p>
+        </div>
+        <div class="die person">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <div class="avatar">FN</div>
+          <h3>Full Name</h3>
+          <p class="role">Head of Hardware</p>
+          <p class="bio">One or two lines on background and focus area.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" aria-label="Contact" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-tag">GET IN TOUCH</p>
+        <h2>Contact us</h2>
+      </div>
+      <div class="contact-grid">
+        <dl class="contact-info">
+          <dt>Email</dt>
+          <dd>info@procshield.example — replace with your real address</dd>
+          <dt>Location</dt>
+          <dd>Add your city / office location</dd>
+          <dt>Follow</dt>
+          <dd>Add your LinkedIn / Twitter links</dd>
+        </dl>
+        <form onsubmit="return false;">
+          <p class="form-note">Note: this form doesn't send anywhere yet — see the notes below for a free way to connect it.</p>
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn primary" style="cursor:pointer;">Send message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="flogo">PROC SHIELD PRIVATE LIMITED</span>
+    <p>&copy; <span id="year"></span> PROC SHIELD Private Limited. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navlinks');
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); });
+  });
+
+  // gentle reveal for section headers only — one deliberate touch, not everything
+  var revealTargets = document.querySelectorAll('.section-head, .vm-card, .product-grid, .contact-grid');
+  revealTargets.forEach(function(el){ el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  revealTargets.forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>
