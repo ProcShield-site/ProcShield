@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — PROC SHIELD Private Limited</title>
+<meta name="description" content="Get in touch with PROC SHIELD Private Limited, Kharagpur, West Bengal.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="page-contact">
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" class="logo"><img src="images/logo.jpg" alt="PROC SHIELD logo"><span>PROC&nbsp;SHIELD</span></a>
+    <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navlinks">MENU</button>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="product.html">Product</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="people.html">People</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero" aria-label="Contact introduction" style="padding-bottom:60px;">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">GET IN TOUCH</p>
+        <h1 class="headline">Contact us</h1>
+        <p class="lede">Questions about KAVACH, our imaging services, or a potential collaboration? Reach out &mdash; we'd like to hear from you.</p>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:280px;margin:0 auto;display:block;">
+          <path class="ct-trace" d="M20 170 L20 100 L130 100 L130 40 L240 40"/>
+          <circle class="ct-dot" r="3.4" style="offset-path: path('M20 170 L20 100 L130 100 L130 40 L240 40');"/>
+          <circle class="breathe" cx="240" cy="40" r="10"/>
+          <circle class="breathe" cx="240" cy="40" r="16"/>
+          <circle cx="240" cy="40" r="4" fill="var(--accent)"/>
+          <circle cx="20" cy="170" r="4" fill="var(--panel-line)"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Contact details" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="reveal">
+          <dl class="contact-info">
+            <dt>Company address</dt>
+            <dd>PROC SHIELD Private Limited<br>Prembazar (near UBI bank)<br>Kharagpur, West Medinipur<br>West Bengal &mdash; 721306</dd>
+            <dt>Questions?</dt>
+            <dd>Kindly reach out to our company and team using the form, or via email.</dd>
+          </dl>
+        </div>
+        <form class="reveal" onsubmit="return false;">
+          <p class="form-note">Note: this form doesn't send anywhere yet on a static site &mdash; see the free Formspree option we discussed to wire it up.</p>
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn primary" style="cursor:pointer;">Send message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="flogo">PROC SHIELD PRIVATE LIMITED</span>
+    <p>&copy; <span id="year"></span> PROC SHIELD Private Limited. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

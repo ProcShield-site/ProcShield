@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAVACH — PROC SHIELD Private Limited</title>
+<meta name="description" content="KAVACH: Key Analysis and Vulnerability Assessment for Cryptographic Hardware — PROC SHIELD's flagship side-channel and fault analysis platform.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="page-product">
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" class="logo"><img src="images/logo.jpg" alt="PROC SHIELD logo"><span>PROC&nbsp;SHIELD</span></a>
+    <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navlinks">MENU</button>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="product.html" class="active">Product</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="people.html">People</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero" aria-label="KAVACH introduction" style="position:relative;">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">FLAGSHIP PRODUCT</p>
+        <h1 class="headline">KAVACH</h1>
+        <p class="lede">Key Analysis and Vulnerability Assessment for Cryptographic Hardware &mdash; an integrated platform for side-channel and fault analysis, built on over a decade of side-channel testing expertise.</p>
+        <div class="cta-row">
+          <a href="contact.html" class="btn primary">Request a demo</a>
+          <a href="services.html" class="btn ghost">See related services</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+          <g class="scope-grid">
+            <line x1="0" y1="55" x2="400" y2="55"/><line x1="0" y1="110" x2="400" y2="110"/><line x1="0" y1="165" x2="400" y2="165"/>
+            <line x1="80" y1="0" x2="80" y2="220"/><line x1="160" y1="0" x2="160" y2="220"/><line x1="240" y1="0" x2="240" y2="220"/><line x1="320" y1="0" x2="320" y2="220"/>
+          </g>
+          <path class="scope-wave w1" d="M0 110 L30 110 L40 40 L50 180 L60 110 L100 110 L110 60 L120 160 L130 110 L200 110 L210 30 L220 190 L230 110 L300 110 L310 70 L320 150 L330 110 L400 110"/>
+          <path class="scope-wave w2" d="M0 110 L45 110 L55 90 L65 130 L75 110 L150 110 L160 80 L170 140 L180 110 L260 110 L270 95 L280 125 L290 110 L400 110"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="What KAVACH does">
+    <div class="wrap">
+      <div class="split">
+        <div class="die framed reveal">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <img src="images/kavach-gui.jpg" alt="KAVACH software interface showing ChipWhisperer SCA controls, trace collection, and CPA attack tools">
+          <p class="caption">KAVACH interface &mdash; ChipWhisperer side-channel analysis panel</p>
+        </div>
+        <div>
+          <p class="kicker">SIDE-CHANNEL &amp; FAULT ANALYSIS</p>
+          <h3>An integrated analyzer, not a pile of separate tools</h3>
+          <p>PROC SHIELD is designed to address critical needs in embedded security testing. KAVACH eliminates a key bottleneck in embedded security research by offering built-in functionality to capture power and electromagnetic (EM) measurements directly from cryptographic co-processors under evaluation. It supports both power and fault attack analyses, and allows seamless configuration and control of both FPGA and oscilloscope components via an intuitive GUI.</p>
+          <ul class="feature-list">
+            <li>Power &amp; EM trace capture from crypto co-processors</li>
+            <li>Combined power-attack and fault-attack analysis</li>
+            <li>One GUI to control both FPGA and oscilloscope</li>
+            <li>Direct AES trace generation via ChipWhisperer boards</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="System setup">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="section-tag">HOW IT CONNECTS</p>
+        <h2>From target device to trace, end to end</h2>
+        <p>KAVACH ties together the oscilloscope, EM probe, pre-amplifier, and target device into one measurement chain &mdash; and layers in ChipWhisperer support to cut hardware costs further.</p>
+      </div>
+      <div class="split rev">
+        <div>
+          <p class="kicker">AFFORDABLE, ACCESSIBLE TESTING</p>
+          <h3>Cutting-edge testing without the cutting-edge price tag</h3>
+          <p>Expanding on traditional functionalities, KAVACH enhances affordability and accessibility by enabling direct trace generation through communication with ChipWhisperer boards. This facilitates the generation of AES traces for both power and fault analysis without requiring an oscilloscope &mdash; eliminating the dependency on external high-cost equipment and making cutting-edge security testing feasible in low-cost environments.</p>
+        </div>
+        <div class="die framed reveal">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <img src="images/kavach-diagram.jpg" alt="Diagram of KAVACH measurement setup: oscilloscope, pre-amplifier, EM probe, target device, and ChipWhisperer board">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Hardware in use" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="die framed reveal" style="max-width:640px;margin:0 auto;">
+        <span class="corner-bl"></span><span class="corner-br"></span>
+        <img src="images/kavach-hardware.jpg" alt="ChipWhisperer capture board connected to a target board on a lab bench">
+        <p class="caption">ChipWhisperer capture hardware connected to a target board in a KAVACH test setup</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="flogo">PROC SHIELD PRIVATE LIMITED</span>
+    <p>&copy; <span id="year"></span> PROC SHIELD Private Limited. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
