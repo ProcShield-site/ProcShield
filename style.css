@@ -170,6 +170,51 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 footer p{ font-size: 13px; color: var(--ink-dim); margin:0; }
 footer .flogo{ font-family: var(--mono); font-size:13px; color: var(--ink-dim); }
 
+/* ---------- ambient fiducial glow (chip alignment marks, site-wide) ---------- */
+.die::before, .die::after, .die .corner-bl, .die .corner-br{
+  animation: dieGlow 4.4s ease-in-out infinite;
+}
+.die::after{ animation-delay: .5s; }
+.die .corner-bl{ animation-delay: 1s; }
+.die .corner-br{ animation-delay: 1.5s; }
+@keyframes dieGlow{
+  0%,100%{ border-color: var(--accent-dim); opacity:.55; }
+  50%{ border-color: var(--accent); opacity:1; }
+}
+
+/* ---------- reusable animated IC chip icon ---------- */
+.chip-anim .chip-body{ fill: var(--panel); stroke: var(--accent-dim); stroke-width:1.5; }
+.chip-anim .chip-core{ fill:none; stroke: var(--accent-dim); stroke-width:1; opacity:.6; }
+.chip-anim .pin{ stroke: var(--panel-line); stroke-width:2; }
+.chip-anim .pin.on{ stroke: var(--accent); filter: drop-shadow(0 0 3px var(--accent)); animation: pinFlash 2.6s ease-in-out infinite; }
+.chip-anim .pin.on.d1{ animation-delay:.15s; }
+.chip-anim .pin.on.d2{ animation-delay:.3s; }
+.chip-anim .pin.on.d3{ animation-delay:.45s; }
+.chip-anim .pin.on.d4{ animation-delay:.6s; }
+.chip-anim .pin.on.d5{ animation-delay:.75s; }
+.chip-anim .core-pulse{ fill:none; stroke: var(--accent); stroke-width:1; opacity:0; animation: coreBlip 2.6s ease-in-out infinite; }
+@keyframes pinFlash{ 0%,100%{ opacity:.35; } 50%{ opacity:1; } }
+@keyframes coreBlip{ 0%,100%{ opacity:0; } 50%{ opacity:.9; } }
+
+/* ---------- wafer-grid drift (services hero, layered behind the beam) ---------- */
+.wafer-grid{ position:absolute; inset:-20%; opacity:.16; z-index:0; animation: waferDrift 22s linear infinite; }
+.wafer-grid line{ stroke: var(--accent-dim); stroke-width:1; }
+@keyframes waferDrift{ 0%{ transform: translate(0,0); } 100%{ transform: translate(-40px,-40px); } }
+
+/* ---------- pin-glow hover ring (people photos) ---------- */
+.person .photo{ position:relative; }
+.person .photo::before{
+  content:""; position:absolute; inset:6px; border: 1px dashed var(--accent);
+  opacity:0; transition: opacity .3s ease; pointer-events:none;
+}
+.person:hover .photo::before{ opacity:.7; }
+.person .photo .pin-mark{ position:absolute; width:6px; height:6px; background: var(--accent); opacity:0; transition: opacity .3s ease, transform .3s ease; box-shadow: 0 0 6px 1px var(--accent); }
+.person:hover .photo .pin-mark{ opacity:1; }
+.person .photo .pin-mark.tl{ top:-3px; left:-3px; }
+.person .photo .pin-mark.tr{ top:-3px; right:-3px; transition-delay:.05s; }
+.person .photo .pin-mark.bl{ bottom:-3px; left:-3px; transition-delay:.1s; }
+.person .photo .pin-mark.br{ bottom:-3px; right:-3px; transition-delay:.15s; }
+
 /* scroll reveal utility */
 .reveal{ opacity:0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in{ opacity:1; transform:none; }
