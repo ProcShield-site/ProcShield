@@ -196,10 +196,16 @@ footer .flogo{ font-family: var(--mono); font-size:13px; color: var(--ink-dim); 
 @keyframes pinFlash{ 0%,100%{ opacity:.35; } 50%{ opacity:1; } }
 @keyframes coreBlip{ 0%,100%{ opacity:0; } 50%{ opacity:.9; } }
 
-/* ---------- wafer-grid drift (services hero, layered behind the beam) ---------- */
-.wafer-grid{ position:absolute; inset:-20%; opacity:.16; z-index:0; animation: waferDrift 22s linear infinite; }
-.wafer-grid line{ stroke: var(--accent-dim); stroke-width:1; }
-@keyframes waferDrift{ 0%{ transform: translate(0,0); } 100%{ transform: translate(-40px,-40px); } }
+/* ---------- wafer-grid drift (services hero) — seamless tiling, never runs out ---------- */
+.wafer-grid{
+  position:absolute; inset:0; z-index:0; opacity:.14; pointer-events:none;
+  background-image:
+    linear-gradient(var(--accent-dim) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent-dim) 1px, transparent 1px);
+  background-size: 34px 34px;
+  animation: waferDrift 16s linear infinite;
+}
+@keyframes waferDrift{ from{ background-position: 0 0; } to{ background-position: 34px 34px; } }
 
 /* ---------- pin-glow hover ring (people photos) ---------- */
 .person .photo{ position:relative; }
@@ -215,7 +221,26 @@ footer .flogo{ font-family: var(--mono); font-size:13px; color: var(--ink-dim); 
 .person .photo .pin-mark.bl{ bottom:-3px; left:-3px; transition-delay:.1s; }
 .person .photo .pin-mark.br{ bottom:-3px; right:-3px; transition-delay:.15s; }
 
-/* scroll reveal utility */
+/* ---------- BIG showcase chip (large, obviously an IC, one per page) ---------- */
+.big-chip-band{ padding: 70px 0; text-align:center; }
+.big-chip-band .section-tag, .big-chip-band h2{ text-align:center; margin-left:auto; margin-right:auto; }
+.big-chip-band .section-head{ margin-left:auto; margin-right:auto; text-align:center; }
+.big-chip-wrap{ position:relative; width:240px; height:240px; margin: 34px auto 0; }
+.big-chip-wrap.lg{ width:340px; height:340px; }
+.big-chip-ring{
+  position:absolute; inset:-16px; border:1.5px dashed var(--accent-dim);
+  border-radius:50%; opacity:.55; animation: bigRingSpin 16s linear infinite;
+}
+.big-chip-ring.r2{ inset:-32px; opacity:.3; animation-duration: 26s; animation-direction: reverse; }
+@keyframes bigRingSpin{ to{ transform: rotate(360deg); } }
+.big-chip svg{ width:100%; height:100%; }
+.big-chip .chip-body{ fill: var(--panel); stroke: var(--accent-dim); stroke-width:1.5; }
+.big-chip .chip-core{ fill:none; stroke: var(--accent-dim); stroke-width:1; opacity:.6; }
+.big-chip .chip-core-glow{ fill: var(--accent); opacity:0; animation: bigCoreGlow 3.2s ease-in-out infinite; }
+@keyframes bigCoreGlow{ 0%,100%{ opacity:.05; } 50%{ opacity:.5; } }
+.big-chip .notch{ fill: var(--bg); stroke: var(--accent-dim); stroke-width:1; }
+.big-chip .bpin{ stroke: var(--panel-line); stroke-width:2.4; }
+.big-chip .bpin.on{ stroke: var(--accent); filter: drop-shadow(0 0 4px var(--accent)); animation: pinFlash 2.4s ease-in-out infinite; }
 .reveal{ opacity:0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.in{ opacity:1; transform:none; }
 
@@ -269,7 +294,7 @@ body.page-services{
 
 /* ---- PEOPLE: slate navy, soft blue accent, staggered rise + glow ring ---- */
 body.page-people{
-  --bg:#10233A; --panel:#16304C; --panel-line:#284768; --accent:#7FB8E8; --accent-dim:#3E6E96; --signal:#A9D4F5;
+  --bg:#1C3A5C; --panel:#25476B; --panel-line:#3A5E82; --accent:#8FC2EF; --accent-dim:#5688B3; --signal:#B7DBF8;
 }
 .page-people .hero-bg{ position:absolute; inset:0; background: radial-gradient(ellipse at 30% 20%, rgba(127,184,232,0.10), transparent 55%); z-index:0; }
 .page-people .ring{ fill:none; stroke: var(--accent-dim); stroke-width:1; opacity:.5; animation: plRing 3.6s ease-out infinite; transform-origin: center; }
@@ -281,7 +306,7 @@ body.page-people{
 
 /* ---- CONTACT: deep navy-teal, teal accent, breathing signal + traveling dot ---- */
 body.page-contact{
-  --bg:#0C2032; --panel:#123045; --panel-line:#204a63; --accent:#4FC3E0; --accent-dim:#2C87A0; --signal:#8FE0F2;
+  --bg:#123B54; --panel:#1B4A66; --panel-line:#2E6685; --accent:#5FD0EA; --accent-dim:#3B9CB8; --signal:#9FE6F5;
 }
 .page-contact .hero-bg{ position:absolute; inset:0; background: radial-gradient(ellipse at 75% 25%, rgba(79,195,224,0.10), transparent 55%); z-index:0; }
 .page-contact .breathe{ fill:none; stroke: var(--accent); stroke-width:1.4; animation: ctBreathe 2.8s ease-in-out infinite; transform-origin: center; }
