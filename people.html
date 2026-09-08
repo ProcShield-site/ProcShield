@@ -32,11 +32,16 @@
       <h1 class="headline">People</h1>
       <p class="lede">Advisors and researchers from IIT Kharagpur, Nanyang Technological University, and the Max Planck Institute for Security and Privacy.</p>
     </div>
-    <svg viewBox="0 0 400 200" aria-hidden="true" style="position:absolute; right:0; top:0; width:44%; height:100%; opacity:.5;">
-      <circle class="ring r1" cx="300" cy="100" r="20"/>
-      <circle class="ring r2" cx="300" cy="100" r="20"/>
-      <circle class="ring r3" cx="300" cy="100" r="20"/>
-    </svg>
+    <div class="shield-wrap" style="position:absolute; top:24px; right:6%; z-index:1;" aria-hidden="true">
+      <svg viewBox="0 0 100 115">
+        <defs><clipPath id="shieldClipPeople"><path d="M50 5 L92 22 L92 55 C92 82 72 100 50 112 C28 100 8 82 8 55 L8 22 Z"/></clipPath></defs>
+        <path class="shield-outline" d="M50 5 L92 22 L92 55 C92 82 72 100 50 112 C28 100 8 82 8 55 L8 22 Z"/>
+        <g clip-path="url(#shieldClipPeople)"><rect class="shield-scan" x="0" y="-40" width="100" height="40"/></g>
+        <rect class="shield-lock-glow" x="30" y="42" width="40" height="38"/>
+        <rect class="shield-lock-body" x="38" y="55" width="24" height="20" rx="2"/>
+        <path class="shield-lock-shackle" d="M42 55 v-8 a8 8 0 0 1 16 0 v8"/>
+      </svg>
+    </div>
   </section>
 
   <section aria-label="Advisors">
